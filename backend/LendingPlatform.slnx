@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="LendingPlatform.Api/LendingPlatform.Api.csproj" />
+  <Project Path="LendingPlatform.Application/LendingPlatform.Application.csproj" />
+  <Project Path="LendingPlatform.Domain/LendingPlatform.Domain.csproj" />
+  <Project Path="LendingPlatform.Infrastructure/LendingPlatform.Infrastructure.csproj" />
+  <Project Path="LendingPlatform.Tests/LendingPlatform.Tests.csproj" />
+</Solution>
