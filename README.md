@@ -6,6 +6,19 @@ The platform provides an API and a web frontend to evaluate loan applications ag
 
 ---
 
+## 🚀 Live Demonstration
+
+The platform is deployed live and publicly accessible:
+
+| Component | Platform | Live URL |
+| :--- | :--- | :--- |
+| **Web Frontend** | **Vercel** | **[lending-platform-navy.vercel.app](https://lending-platform-navy.vercel.app)** |
+| **Backend Web API** | **Render** | **[lending-platform-api.onrender.com](https://lending-platform-api.onrender.com)** |
+| **OpenAPI Spec** | **Render** | **[lending-platform-api.onrender.com/openapi/v1.json](https://lending-platform-api.onrender.com/openapi/v1.json)** |
+| **Database** | **Azure SQL** | `lending-platform-suraj.database.windows.net` (Serverless) |
+
+---
+
 ## 1. Assessment Overview & Requirements
 
 The assessment evaluates:
@@ -256,7 +269,49 @@ The user interface consists of three views accessible from the top navigation ba
 
 ---
 
-## 9. Local Setup & Getting Started
+## 9. Live Cloud Deployment Architecture
+
+The solution is deployed to the cloud using a modern decoupled 3-tier architecture operating 100% within the free tiers of each cloud provider:
+
+```text
+[ Browser Client ]
+       │
+       ▼ (HTTPS)
+[ Vercel CDN ] ─── React 19 + Vite SPA (lending-platform-navy.vercel.app)
+       │
+       ▼ REST API (HTTPS / CORS)
+[ Render Web Service ] ─── Dockerized ASP.NET Core (.NET 10) (lending-platform-api.onrender.com)
+       │
+       ▼ Encrypted TCP (Port 1433 / TLS)
+[ Azure SQL Database ] ─── Serverless MS SQL Server (lending-platform-suraj.database.windows.net)
+```
+
+### 1. Frontend (Vercel)
+* **Live URL**: [https://lending-platform-navy.vercel.app](https://lending-platform-navy.vercel.app)
+* **Hosting**: Vercel Global Edge Network
+* **Framework**: Vite + React 19 + Tailwind CSS
+* **SPA Routing**: Configured via `frontend/vercel.json` with route rewriting (`/(.*) -> /index.html`) to support direct deep-linking and browser refreshes across `/`, `/applications`, and `/dashboard`.
+* **API Integration**: Connected via production environment variable `VITE_API_BASE_URL` pointing to the Render backend service.
+
+### 2. Backend Web API (Render)
+* **Live API**: [https://lending-platform-api.onrender.com](https://lending-platform-api.onrender.com)
+* **OpenAPI Spec**: [https://lending-platform-api.onrender.com/openapi/v1.json](https://lending-platform-api.onrender.com/openapi/v1.json)
+* **Hosting**: Render Cloud Web Service (Free Tier)
+* **Containerization**: Multi-stage Linux container build using `mcr.microsoft.com/dotnet/sdk:10.0-preview` and `mcr.microsoft.com/dotnet/aspnet:10.0-preview` via the root `Dockerfile`.
+* **CORS**: Dynamically allows requests from local development origins and all `*.vercel.app` production domains.
+* **Configuration**: Secure database connection string injected via Render dashboard environment variable `ConnectionStrings__LendingDatabase`.
+
+### 3. Database (Microsoft Azure SQL Database)
+* **Server**: `lending-platform-suraj.database.windows.net`
+* **Database**: `LendingPlatformDb`
+* **Tier**: Azure SQL Serverless (`General Purpose: Serverless, Gen5, 1 vCore`)
+* **Cost**: 100% Free Tier (utilizing Azure's 100,000 vCore-seconds/month free grant with auto-pause enabled).
+* **Schema Management**: Deployed using Entity Framework Core migrations (`InitialCreate`).
+* **Security**: Enforced TLS/SSL encryption (`Encrypt=True`) with firewall rules restricted to client IPs and cloud application egress.
+
+---
+
+## 10. Local Setup & Getting Started
 
 ### Prerequisites
 * [.NET 10 SDK](https://dotnet.microsoft.com/download)
@@ -296,7 +351,7 @@ The Vite development server will start (typically at `http://localhost:5173`). O
 
 ---
 
-## 10. Verification & Test Execution
+## 11. Verification & Test Execution
 
 ### Backend Automated Tests
 The backend test suite contains **41 automated tests** covering:
@@ -328,7 +383,7 @@ Both commands pass without warnings or errors.
 
 ---
 
-## 11. AI-Assisted Development
+## 12. AI-Assisted Development
 
 AI tools were used as coding assistants throughout the development process. They were used to support implementation, debugging, test-writing suggestions, code review, and documentation.
 
@@ -338,7 +393,7 @@ AI-generated suggestions were reviewed and tested rather than being accepted bli
 
 ---
 
-## 12. Production Considerations
+## 13. Production Considerations
 
 While this assessment demonstrates clean architecture, well-tested domain rules, and resilient persistence, several enhancements would be considered prior to deploying this system to a production environment:
 
