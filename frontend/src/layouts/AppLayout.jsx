@@ -7,9 +7,15 @@ function AppLayout() {
                 <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
                     <NavLink
                         to="/"
-                        className="rounded-lg text-xl font-bold tracking-tight text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2"
+                        className="flex items-center gap-2.5 rounded-lg text-xl font-bold tracking-tight text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 focus-visible:ring-offset-2"
                     >
-                        LendingPlatform
+                        <img
+                            src="/peer-to-peer.png"
+                            alt=""
+                            className="h-7 w-7 object-contain"
+                            aria-hidden="true"
+                        />
+                        <span>LendingPlatform</span>
                     </NavLink>
 
                     <nav aria-label="Main Navigation" className="flex flex-wrap items-center gap-1 sm:gap-2">
