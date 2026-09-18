@@ -108,7 +108,7 @@ LTV = Loan Amount / Asset Value × 100
 The solution follows a Clean Architecture separation to ensure business logic remains decoupled from frameworks and persistence:
 
 ```text
-Thrive-Task/
+lending-platform/
 ├── backend/
 │   ├── LendingPlatform.slnx
 │   ├── LendingPlatform.Domain/          # Core entities, enums, LoanDecisionEngine, domain logic
@@ -260,7 +260,7 @@ The user interface consists of three views accessible from the top navigation ba
 
 ### Prerequisites
 * [.NET 10 SDK](https://dotnet.microsoft.com/download)
-* [Node.js (v18+) & npm](https://nodejs.org/)
+* [Node.js (v20.19+ or v22.12+) & npm](https://nodejs.org/)
 * [Microsoft SQL Server](https://www.microsoft.com/sql-server/) running locally (instance accessible via `localhost` or Windows Authentication)
 * `dotnet-ef` CLI tool (optional, for running migrations manually: `dotnet tool install --global dotnet-ef`)
 
