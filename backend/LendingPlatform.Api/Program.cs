@@ -40,7 +40,12 @@ builder.Services.AddCors(options =>
     options.AddPolicy("Frontend", policy =>
     {
         policy
-            .WithOrigins("http://localhost:5173")
+            .SetIsOriginAllowed(origin =>
+            {
+                var uri = new Uri(origin);
+                return uri.Host == "localhost" ||
+                       uri.Host.EndsWith("vercel.app");
+            })
             .AllowAnyHeader()
             .AllowAnyMethod();
     });
@@ -49,11 +54,8 @@ builder.Services.AddCors(options =>
 var app = builder.Build();
 app.UseMiddleware<ExceptionHandlingMiddleware>();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.MapOpenApi();
-}
+// Configure the HTTP request pipeline (available for live demo/Swagger).
+app.MapOpenApi();
 
 //app.UseHttpsRedirection();
 
